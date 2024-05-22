@@ -1,0 +1,19 @@
+#Configuration File
+
+position:  # Posizione degli item nella gui
+  mele: 11
+  freccia: 13
+  canna: 15
+
+glassName:     # Nome con il quale vedere il vetro qui
+
+itemLore:
+  mele:
+    ON: "§aRaccoglimento MELE abilitato"
+    OFF: "§cRaccoglimento MELE disabilitato"
+  freccia:
+    ON: "§aRaccoglimento FRECCIA abilitato"
+    OFF: "§cRaccoglimento FRECCIA disabilitato"
+  canna:
+    ON: "§aRaccoglimento CANNA DA PESCA abilitato"
+    OFF: "§cRaccoglimento CANNA DA PESCA disabilitato"

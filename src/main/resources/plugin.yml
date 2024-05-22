@@ -1,3 +1,7 @@
 name: PvPAntiDrop
 version: '${project.version}'
 main: it.samuconfaa.pvpantidrop.PvPAntiDrop
+commands:
+  drop:
+    permission: default
+    usage: /drop
