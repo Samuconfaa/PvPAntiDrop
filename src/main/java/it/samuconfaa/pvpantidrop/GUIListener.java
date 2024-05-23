@@ -19,8 +19,11 @@ import java.util.Map;
 public class GUIListener implements Listener {
 
     int melePos = ConfigurationManager.melePos();
+    String nomeGUI = ConfigurationManager.guiName();
+    int grandezzaGUI = ConfigurationManager.GUIHeight();
     int cannaPos = ConfigurationManager.cannaPos();
     int frecciaPos = ConfigurationManager.frecciaPos();
+    int glassColor = ConfigurationManager.glassColor();
     private final Map<Player, Boolean> goldenApplePickupStatus = new HashMap<>();
     private final Map<Player, Boolean> cannaPickupStatus = new HashMap<>();
     private final Map<Player, Boolean> arrowPickupStatus = new HashMap<>();
@@ -34,7 +37,7 @@ public class GUIListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         Inventory inventory = e.getInventory();
-        if (inventory.getHolder() == null && "Scelta Drops".equals(inventory.getName())) {
+        if (inventory.getHolder() == null && nomeGUI.equals(inventory.getName())) {
             e.setCancelled(true);
 
             Player player = (Player) e.getWhoClicked();
@@ -84,7 +87,7 @@ public class GUIListener implements Listener {
 
     public void openGui(Player player) {
 
-        Inventory gui = Bukkit.createInventory(null, 27, "Scelta Drops");
+        Inventory gui = Bukkit.createInventory(null, GUIHeight, nomeGUI);
 
         boolean isEnabledMela = goldenApplePickupStatus.getOrDefault(player, true);
         ItemStack mele = new ItemStack(Material.GOLDEN_APPLE);
@@ -107,13 +110,13 @@ public class GUIListener implements Listener {
         canna.setItemMeta(meta3);
         gui.setItem(cannaPos, canna);
 
-        ItemStack vetro = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
+        ItemStack vetro = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) glassColor);
         ItemMeta meta = vetro.getItemMeta();
         meta.setDisplayName(ConfigurationManager.glass());
         vetro.setItemMeta(meta);
 
 
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < GUIHeight - 1; i++) {
             if (i != melePos && i != frecciaPos && i != cannaPos) {
                 gui.setItem(i, vetro);
             }

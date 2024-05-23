@@ -15,6 +15,14 @@ public class ConfigurationManager {
         config = plugin.getConfig();
     }
 
+    public static int altezzaGUI(){
+        return config.getInt("GUIHeight", 27);
+    }
+    public static int glassColor(){
+        return config.getInt("glassColor", 7);
+    }
+
+
     public static int melePos(){
         return config.getInt("position.mele", 11);
     }
@@ -48,5 +56,9 @@ public class ConfigurationManager {
     }
     public static String frecciaOFF(){
         return config.getString("itemLore.freccia.off");
+    }
+
+    public static String guiName(){
+        return config.getString("nomeGUI");
     }
 }

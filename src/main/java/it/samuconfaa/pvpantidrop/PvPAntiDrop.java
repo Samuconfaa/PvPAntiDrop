@@ -18,6 +18,7 @@ public final class PvPAntiDrop extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         guiListener = new GUIListener(this);
         getCommand("drop").setExecutor(new Command(this));
         getServer().getPluginManager().registerEvents(guiListener, this);
