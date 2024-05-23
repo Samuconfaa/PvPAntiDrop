@@ -4,10 +4,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Command implements CommandExecutor {
+public class DropCommand implements CommandExecutor {
     private final PvPAntiDrop plugin;
 
-    public Command(PvPAntiDrop plugin) {
+    public DropCommand(PvPAntiDrop plugin) {
         this.plugin = plugin;
     }
 

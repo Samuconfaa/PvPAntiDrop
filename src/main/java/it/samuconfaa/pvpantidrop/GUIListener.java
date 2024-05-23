@@ -1,7 +1,6 @@
 package it.samuconfaa.pvpantidrop;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,47 +10,40 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GUIListener implements Listener {
 
-    int melePos = ConfigurationManager.melePos();
-    String nomeGUI = ConfigurationManager.guiName();
-    int grandezzaGUI = ConfigurationManager.GUIHeight();
-    int cannaPos = ConfigurationManager.cannaPos();
-    int frecciaPos = ConfigurationManager.frecciaPos();
-    int glassColor = ConfigurationManager.glassColor();
+    private final PvPAntiDrop plugin;
     private final Map<Player, Boolean> goldenApplePickupStatus = new HashMap<>();
     private final Map<Player, Boolean> cannaPickupStatus = new HashMap<>();
     private final Map<Player, Boolean> arrowPickupStatus = new HashMap<>();
 
-    private final JavaPlugin plugin;
-
-    public GUIListener(JavaPlugin plugin) {
+    public GUIListener(PvPAntiDrop plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         Inventory inventory = e.getInventory();
-        if (inventory.getHolder() == null && nomeGUI.equals(inventory.getName())) {
+        if (inventory.getHolder() == null && ConfigurationManager.guiName().equals(inventory.getName())) {
             e.setCancelled(true);
 
             Player player = (Player) e.getWhoClicked();
-            if (e.getRawSlot() == melePos) {
+            int slot = e.getRawSlot();
+            if (slot == ConfigurationManager.melePos()) {
                 boolean isEnabledMela = goldenApplePickupStatus.getOrDefault(player, true);
                 goldenApplePickupStatus.put(player, !isEnabledMela);
                 openGui(player);
                 player.sendMessage(isEnabledMela ? ConfigurationManager.meleOFF() : ConfigurationManager.meleON());
-            } else if (e.getRawSlot() == frecciaPos) {
+            } else if (slot == ConfigurationManager.frecciaPos()) {
                 boolean isEnabledFreccia = arrowPickupStatus.getOrDefault(player, true);
                 arrowPickupStatus.put(player, !isEnabledFreccia);
                 openGui(player);
                 player.sendMessage(isEnabledFreccia ? ConfigurationManager.frecciaOFF() : ConfigurationManager.frecciaON());
-            } else if (e.getRawSlot() == cannaPos) {
+            } else if (slot == ConfigurationManager.cannaPos()) {
                 boolean isEnabledCanna = cannaPickupStatus.getOrDefault(player, true);
                 cannaPickupStatus.put(player, !isEnabledCanna);
                 openGui(player);
@@ -65,63 +57,46 @@ public class GUIListener implements Listener {
         Player player = event.getPlayer();
         ItemStack item = event.getItem().getItemStack();
 
-        if (item.getType() == Material.GOLDEN_APPLE) {
-            boolean isEnabledMele = goldenApplePickupStatus.getOrDefault(player, true);
-            if (!isEnabledMele) {
-                event.setCancelled(true);
-            }
-        }
-        if (item.getType() == Material.ARROW) {
-            boolean isEnabledFreccia = arrowPickupStatus.getOrDefault(player, true);
-            if (!isEnabledFreccia) {
-                event.setCancelled(true);
-            }
-        }
-        if (item.getType() == Material.FISHING_ROD) {
-            boolean isEnabledCanna = cannaPickupStatus.getOrDefault(player, true);
-            if (!isEnabledCanna) {
-                event.setCancelled(true);
-            }
+        if (item.getType() == Material.GOLDEN_APPLE && !goldenApplePickupStatus.getOrDefault(player, true)) {
+            event.setCancelled(true);
+        } else if (item.getType() == Material.ARROW && !arrowPickupStatus.getOrDefault(player, true)) {
+            event.setCancelled(true);
+        } else if (item.getType() == Material.FISHING_ROD && !cannaPickupStatus.getOrDefault(player, true)) {
+            event.setCancelled(true);
         }
     }
 
     public void openGui(Player player) {
+        Inventory gui = Bukkit.createInventory(null, ConfigurationManager.altezzaGUI(), ConfigurationManager.guiName());
 
-        Inventory gui = Bukkit.createInventory(null, GUIHeight, nomeGUI);
+        ItemStack mele = createItem(Material.GOLDEN_APPLE, goldenApplePickupStatus.getOrDefault(player, true) ? ConfigurationManager.meleON() : ConfigurationManager.meleOFF());
+        gui.setItem(ConfigurationManager.melePos(), mele);
 
-        boolean isEnabledMela = goldenApplePickupStatus.getOrDefault(player, true);
-        ItemStack mele = new ItemStack(Material.GOLDEN_APPLE);
-        ItemMeta meta1 = mele.getItemMeta();
-        meta1.setDisplayName(isEnabledMela ? ConfigurationManager.meleON() : ConfigurationManager.meleOFF());
-        mele.setItemMeta(meta1);
-        gui.setItem(melePos, mele);
+        ItemStack freccia = createItem(Material.ARROW, arrowPickupStatus.getOrDefault(player, true) ? ConfigurationManager.frecciaON() : ConfigurationManager.frecciaOFF());
+        gui.setItem(ConfigurationManager.frecciaPos(), freccia);
 
-        boolean isEnabledFreccia = arrowPickupStatus.getOrDefault(player, true);
-        ItemStack freccia = new ItemStack(Material.ARROW);
-        ItemMeta meta2 = freccia.getItemMeta();
-        meta2.setDisplayName(isEnabledFreccia ? ConfigurationManager.frecciaON() : ConfigurationManager.frecciaOFF());
-        freccia.setItemMeta(meta2);
-        gui.setItem(frecciaPos, freccia);
+        ItemStack canna = createItem(Material.FISHING_ROD, cannaPickupStatus.getOrDefault(player, true) ? ConfigurationManager.cannaON() : ConfigurationManager.cannaOFF());
+        gui.setItem(ConfigurationManager.cannaPos(), canna);
 
-        boolean isEnabledCanna = cannaPickupStatus.getOrDefault(player, true);
-        ItemStack canna = new ItemStack(Material.FISHING_ROD);
-        ItemMeta meta3 = canna.getItemMeta();
-        meta3.setDisplayName(isEnabledCanna ? ConfigurationManager.cannaON() : ConfigurationManager.cannaOFF());
-        canna.setItemMeta(meta3);
-        gui.setItem(cannaPos, canna);
-
-        ItemStack vetro = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) glassColor);
+        ItemStack vetro = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) ConfigurationManager.glassColor());
         ItemMeta meta = vetro.getItemMeta();
         meta.setDisplayName(ConfigurationManager.glass());
         vetro.setItemMeta(meta);
 
-
-        for (int i = 0; i < GUIHeight - 1; i++) {
-            if (i != melePos && i != frecciaPos && i != cannaPos) {
+        for (int i = 0; i < ConfigurationManager.altezzaGUI() - 1; i++) {
+            if (i != ConfigurationManager.melePos() && i != ConfigurationManager.frecciaPos() && i != ConfigurationManager.cannaPos()) {
                 gui.setItem(i, vetro);
             }
         }
 
         player.openInventory(gui);
+    }
+
+    private ItemStack createItem(Material material, String name) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        item.setItemMeta(meta);
+        return item;
     }
 }
