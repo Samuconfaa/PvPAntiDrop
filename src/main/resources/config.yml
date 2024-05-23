@@ -8,17 +8,17 @@ position:  # Posizione degli item nella gui
   freccia: 13
   canna: 15
 
-glassName:   "x"  # Nome con il quale vedere il vetro qui
+glassName:   "§c§lYOUR.SERVERIP.COM"  # Nome con il quale vedere il vetro qui
 glassColor: 7 # ID rispettivo
 
+itemname:
+  mele: "§6§lMELE D'ORO"
+  freccia: "§9§lFRECCIA"
+  canna: "§8§lCANNA DA PESCA"
 
-itemLore:
-  mele:
-    ON: "§a§lRaccoglimento MELE abilitato"
-    OFF: "§c§lRaccoglimento MELE disabilitato"
-  freccia:
-    ON: "§a§lRaccoglimento FRECCIA abilitato"
-    OFF: "§c§lRaccoglimento FRECCIA disabilitato"
-  canna:
-    ON: "§a§lRaccoglimento CANNA DA PESCA abilitato"
-    OFF: "§c§lRaccoglimento CANNA DA PESCA disabilitato"
+status:
+  enable: "§aAbilitato"
+  disable: "§cDisabilitato"
+
+noPerms: "§cNon hai abbastanza permessi per fare questo!"
+reload: "§aConfig ricaricato con successo"

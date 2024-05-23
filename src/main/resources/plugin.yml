@@ -3,5 +3,15 @@ version: '${project.version}'
 main: it.samuconfaa.pvpantidrop.PvPAntiDrop
 commands:
   drop:
-    permission: default
     usage: /drop
+  reload:
+    description: reload config.yml
+    usage: /drop reload
+permissions:
+  drop.gui:
+    description: apre la gui.
+    default: true
+  drop.reload:
+    description: reload config.yml
+    default: op
+

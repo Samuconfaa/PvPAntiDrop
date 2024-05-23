@@ -1,10 +1,14 @@
 package it.samuconfaa.pvpantidrop;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
 
 public class ConfigurationManager {
     private final PvPAntiDrop plugin;
     private static FileConfiguration config;
+    private static File configFile;
 
     public ConfigurationManager(PvPAntiDrop plugin) {
         this.plugin = plugin;
@@ -13,6 +17,11 @@ public class ConfigurationManager {
     public void loadConfig() {
         plugin.saveDefaultConfig();
         config = plugin.getConfig();
+        configFile = new File(plugin.getDataFolder(), "config.yml");
+    }
+
+    public static void reloadConfig() {
+        config = YamlConfiguration.loadConfiguration(configFile);
     }
 
     public static int altezzaGUI() {
@@ -39,29 +48,30 @@ public class ConfigurationManager {
         return config.getString("glassName");
     }
 
-    public static String cannaON() {
-        return config.getString("itemLore.canna.on");
+    public static String meleName(){
+        return config.getString("itemname.mele");
+    }
+    public static String frecciaName(){
+        return config.getString("itemname.freccia");
+    }
+    public static String cannaName(){
+        return config.getString("itemname.canna");
+    }
+    public static String enable(){
+        return config.getString("status.enable");
+    }
+    public static String disable(){
+        return config.getString("status.disable");
     }
 
-    public static String cannaOFF() {
-        return config.getString("itemLore.canna.off");
+    public static String noPerms(){
+        return config.getString("noPerms");
     }
 
-    public static String meleON() {
-        return config.getString("itemLore.mele.on");
+    public static String reload(){
+        return config.getString("reload");
     }
 
-    public static String meleOFF() {
-        return config.getString("itemLore.mele.off");
-    }
-
-    public static String frecciaON() {
-        return config.getString("itemLore.freccia.on");
-    }
-
-    public static String frecciaOFF() {
-        return config.getString("itemLore.freccia.off");
-    }
 
     public static String guiName() {
         return config.getString("nomeGUI");

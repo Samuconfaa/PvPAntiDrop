@@ -9,12 +9,14 @@ public final class PvPAntiDrop extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        configManager = new ConfigurationManager(this);
+        configManager.loadConfig();
+
         guiListener = new GUIListener(this);
         getCommand("drop").setExecutor(new DropCommand(this));
         getServer().getPluginManager().registerEvents(guiListener, this);
-        configManager = new ConfigurationManager(this);
-        configManager.loadConfig();
     }
+
 
     @Override
     public void onDisable() {
