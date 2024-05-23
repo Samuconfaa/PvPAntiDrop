@@ -1,19 +1,24 @@
 #Configuration File
 
+nomeGUI: "Custom GUI" # Nome della gui qui
+GUIHeight: 27 # Grandezza GUI
+
 position:  # Posizione degli item nella gui
   mele: 11
   freccia: 13
   canna: 15
 
-glassName:     # Nome con il quale vedere il vetro qui
+glassName:   "x"  # Nome con il quale vedere il vetro qui
+glassColor: 7 # ID rispettivo
+
 
 itemLore:
   mele:
-    ON: "§aRaccoglimento MELE abilitato"
-    OFF: "§cRaccoglimento MELE disabilitato"
+    ON: "§a§lRaccoglimento MELE abilitato"
+    OFF: "§c§lRaccoglimento MELE disabilitato"
   freccia:
-    ON: "§aRaccoglimento FRECCIA abilitato"
-    OFF: "§cRaccoglimento FRECCIA disabilitato"
+    ON: "§a§lRaccoglimento FRECCIA abilitato"
+    OFF: "§c§lRaccoglimento FRECCIA disabilitato"
   canna:
-    ON: "§aRaccoglimento CANNA DA PESCA abilitato"
-    OFF: "§cRaccoglimento CANNA DA PESCA disabilitato"
+    ON: "§a§lRaccoglimento CANNA DA PESCA abilitato"
+    OFF: "§c§lRaccoglimento CANNA DA PESCA disabilitato"
